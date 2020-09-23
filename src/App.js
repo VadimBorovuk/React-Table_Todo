@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {addTodo} from "./modules/actions";
+import {connect} from 'react-redux'
+import Form from "./components/Form";
+import TableInfo from "./components/TableInfo";
+import Loader from "./components/Loader/Loader";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = ({addTodo}) => {
 
-export default App;
+    return (
+        <div className="table-info">
+            <div className="container">
+                <Form addTodo={addTodo}/>
+                <TableInfo/>
+            </div>
+        </div>
+    );
+};
+
+const mapStateToProps = ({todos}) => ({
+    loading: todos.loading
+});
+
+const mapDispatchToProp = dispatch => ({
+    addTodo: (todo) => dispatch(addTodo({todo}))
+});
+
+export default connect(mapStateToProps, mapDispatchToProp)(App);
